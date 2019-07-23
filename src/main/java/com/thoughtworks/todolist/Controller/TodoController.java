@@ -16,8 +16,8 @@ public class TodoController {
 
     @PostMapping(produces = {"application/json"})
     public ResponseEntity add(@RequestBody Todo todo) throws RuntimeException{
-        todoService.add(todo);
-        return  ResponseEntity.status(HttpStatus.CREATED).build();
+        Todo todo1 = todoService.add(todo);
+        return  ResponseEntity.status(HttpStatus.CREATED).body(todo1);
     }
     @PutMapping("/{id}")
     public ResponseEntity updateById(@PathVariable String id, @RequestBody Todo todo){

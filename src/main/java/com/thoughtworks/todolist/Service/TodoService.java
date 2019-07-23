@@ -7,6 +7,7 @@ import com.thoughtworks.todolist.Repository.TodoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Service
@@ -16,26 +17,27 @@ public class TodoService {
     @Autowired
     private TodoRepository todoRepository;
 
-    public void add(Todo todo) throws RuntimeException{
+    public Todo add(Todo todo) throws RuntimeException{
 
         try {
-            todoRepository.saveAndFlush(todo);
-
+            todo.setComplete(false);
+            todo.setCreateTime(new Timestamp(System.currentTimeMillis()));
+            return todoRepository.saveAndFlush(todo);
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             throw new DBException(this.LOCATION+ DBErrorMsg.DB_INSERT_ERROR.getMessage());
         }
     }
 
     public List<Todo> findAll(){
-        return todoRepository.findAll();
+        return todoRepository.findByOrderByCreateTime();
     }
 
     public void deleteById(String id) throws RuntimeException{
         try {
             todoRepository.deleteById(id);
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             throw new DBException(this.LOCATION+ DBErrorMsg.DB_INSERT_ERROR.getMessage());
         }
     }
@@ -49,7 +51,7 @@ public class TodoService {
         try {
             todoNew = todoRepository.saveAndFlush(todo);
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             throw new DBException(this.LOCATION+DBErrorMsg.DB_UPDATE_ERROR.getMessage());
         }
         return todoNew;
