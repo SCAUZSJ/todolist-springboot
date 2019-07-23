@@ -50,6 +50,9 @@ public class TodoService {
     }
 
     public Todo update(String id, Todo todo) throws RuntimeException{
+        if(todoRepository.findByText(todo.getText())!=null){
+            throw new BusinessException(this.LOCATION+ BusinessErrorMsg.PARAM_ILLEGAL.getMessage());
+        }
         todo.setId(id);
         Todo todoNew = null;
         try {
