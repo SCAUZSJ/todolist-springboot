@@ -1,6 +1,7 @@
 package com.thoughtworks.todolist.ExceptionHandler;
 
 
+import com.thoughtworks.todolist.Respone.ResponseDIY;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -16,7 +17,7 @@ public class Handler {
      */
     @ResponseBody
     @ExceptionHandler(value = RuntimeException.class)
-    public ResponseEntity exceptionHandler(RuntimeException exception){
-       return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
+    public ResponseDIY exceptionHandler(RuntimeException exception){
+        return new ResponseDIY(HttpStatus.BAD_REQUEST.value(),exception.getMessage());
     }
 }

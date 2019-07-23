@@ -1,6 +1,7 @@
 package com.thoughtworks.todolist.Controller;
 
 import com.thoughtworks.todolist.Entity.Todo;
+import com.thoughtworks.todolist.Respone.ResponseDIY;
 import com.thoughtworks.todolist.Service.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,21 +16,21 @@ public class TodoController {
 
 
     @PostMapping(produces = {"application/json"})
-    public ResponseEntity add(@RequestBody Todo todo) throws RuntimeException{
+    public ResponseDIY add(@RequestBody Todo todo) throws RuntimeException{
         Todo todo1 = todoService.add(todo);
-        return  ResponseEntity.status(HttpStatus.CREATED).body(todo1);
+        return new ResponseDIY(HttpStatus.CREATED.value(),todo1);
     }
     @PutMapping("/{id}")
-    public ResponseEntity updateById(@PathVariable String id, @RequestBody Todo todo){
-        return ResponseEntity.ok().body(todoService.update(id,todo));
+    public ResponseDIY updateById(@PathVariable String id, @RequestBody Todo todo){
+        return new ResponseDIY(HttpStatus.OK.value(),todoService.update(id,todo));
     }
     @GetMapping()
-    public ResponseEntity findAll(){
-        return ResponseEntity.ok().body(todoService.findAll());
+    public ResponseDIY findAll(){
+        return new ResponseDIY(HttpStatus.OK.value(),todoService.findAll());
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity delete(@PathVariable String id){
+    public ResponseDIY delete(@PathVariable String id){
         todoService.deleteById(id);
-        return  ResponseEntity.status(HttpStatus.OK).build();
+        return new ResponseDIY(HttpStatus.OK.value());
     }
 }

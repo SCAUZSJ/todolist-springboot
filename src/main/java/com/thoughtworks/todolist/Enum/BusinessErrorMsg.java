@@ -1,12 +1,12 @@
 package com.thoughtworks.todolist.Enum;
 
-public enum  ParamErrorMsg {
+public enum BusinessErrorMsg {
 
-    PARAM_ILLEGAL("参数不合法");
+    PARAM_ILLEGAL("已有该记录，不允许重复添加");
 
     private String message;
 
-    ParamErrorMsg(String message) {
+    BusinessErrorMsg(String message) {
         this.message = message;
     }
 
